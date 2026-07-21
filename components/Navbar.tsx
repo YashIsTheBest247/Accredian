@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Logo } from "@/components/Logo";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { IconMenu, IconClose } from "@/components/icons";
 import { navLinks } from "@/lib/data";
 
@@ -57,7 +58,7 @@ export function Navbar() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 bg-white transition-shadow duration-300 ${
+      className={`fixed inset-x-0 top-0 z-50 bg-surface transition-shadow duration-300 ${
         scrolled ? "shadow-[0_4px_20px_-8px_rgba(16,24,40,0.18)]" : ""
       }`}
     >
@@ -89,21 +90,24 @@ export function Navbar() {
           ))}
         </ul>
 
-        <button
-          type="button"
-          onClick={() => setOpen((v) => !v)}
-          className="grid h-10 w-10 place-items-center rounded-lg text-ink lg:hidden"
-          aria-label={open ? "Close menu" : "Open menu"}
-          aria-expanded={open}
-        >
-          {open ? <IconClose className="h-6 w-6" /> : <IconMenu className="h-6 w-6" />}
-        </button>
+        <div className="flex items-center gap-1">
+          <ThemeToggle />
+          <button
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            className="grid h-10 w-10 place-items-center rounded-lg text-ink lg:hidden"
+            aria-label={open ? "Close menu" : "Open menu"}
+            aria-expanded={open}
+          >
+            {open ? <IconClose className="h-6 w-6" /> : <IconMenu className="h-6 w-6" />}
+          </button>
+        </div>
       </nav>
 
       {/* Mobile menu */}
       <div className={`lg:hidden ${open ? "pointer-events-auto" : "pointer-events-none"}`}>
         <div
-          className={`container-page overflow-hidden border-t border-slate-100 bg-white transition-all duration-300 ${
+          className={`container-page overflow-hidden border-t border-line bg-surface transition-all duration-300 ${
             open ? "max-h-[80vh] py-4 opacity-100" : "max-h-0 py-0 opacity-0"
           }`}
         >
@@ -116,7 +120,7 @@ export function Navbar() {
                   className={`block rounded-lg px-3 py-3 text-base font-medium ${
                     active === link.id
                       ? "bg-brand-50 text-brand-600"
-                      : "text-ink hover:bg-slate-50"
+                      : "text-ink hover:bg-surface-2"
                   }`}
                 >
                   {link.label}

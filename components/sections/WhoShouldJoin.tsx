@@ -11,11 +11,11 @@ export function WhoShouldJoin() {
           <div className="relative grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
             {/* Left: heading + photo */}
             <div>
-              <p className="text-lg font-medium text-brand-100">Who Should Join?</p>
+              <p className="text-lg font-medium text-blue-100">Who Should Join?</p>
               <h2 className="mt-2 text-3xl font-extrabold leading-tight sm:text-4xl">
                 Strategic Skill Enhancement
               </h2>
-              <p className="mt-4 max-w-sm text-brand-100">
+              <p className="mt-4 max-w-sm text-blue-100">
                 Programs designed to elevate every professional — whatever their role,
                 function, or career stage.
               </p>
@@ -37,7 +37,7 @@ export function WhoShouldJoin() {
                   <div className="flex flex-col gap-3">
                     <a.icon className="h-9 w-9 text-white" />
                     <h3 className="text-lg font-bold">{a.title}</h3>
-                    <p className="text-sm leading-relaxed text-brand-100">{a.description}</p>
+                    <p className="text-sm leading-relaxed text-blue-100">{a.description}</p>
                   </div>
                 </Reveal>
               ))}

@@ -7,7 +7,7 @@ const icons = [IconBulb, IconChip, IconGear];
 
 export function CatFramework() {
   return (
-    <section id="cat" className="bg-gradient-to-b from-brand-50/70 to-white py-20 sm:py-24">
+    <section id="cat" className="bg-gradient-to-b from-brand-50/70 to-surface py-14 sm:py-20">
       <div className="container-page">
         <Heading
           title={<>The <Hl>CAT Framework</Hl></>}
@@ -36,7 +36,7 @@ export function CatFramework() {
               const Icon = icons[i];
               return (
                 <Reveal key={step.title} delay={i * 120}>
-                  <div className="mx-auto flex aspect-square w-full max-w-[15rem] flex-col items-center justify-center rounded-full border-2 border-brand-400 bg-white/90 px-8 text-center shadow-[0_16px_40px_-20px_rgba(26,115,232,0.5)] backdrop-blur">
+                  <div className="mx-auto flex aspect-square w-full max-w-[15rem] flex-col items-center justify-center rounded-full border-2 border-brand-400 bg-surface/90 px-8 text-center shadow-[0_16px_40px_-20px_rgba(26,115,232,0.5)] backdrop-blur">
                     <Icon className="h-9 w-9 text-brand-600" />
                     <h3 className="mt-3 text-2xl font-extrabold text-ink">{step.title}</h3>
                     <p className="mt-2 text-sm leading-snug text-ink-soft">{step.description}</p>

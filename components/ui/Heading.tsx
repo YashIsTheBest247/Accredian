@@ -26,7 +26,7 @@ export function Heading({
         {title}
       </h2>
       {subtitle && (
-        <p className={`text-lg ${light ? "text-brand-100" : "text-ink-soft"}`}>{subtitle}</p>
+        <p className={`text-lg ${light ? "text-blue-100" : "text-ink-soft"}`}>{subtitle}</p>
       )}
     </div>
   );

@@ -108,12 +108,12 @@ export function EnquiryProvider({ children }: { children: ReactNode }) {
             role="dialog"
             aria-modal="true"
             aria-label="Enquiry form"
-            className="relative w-full max-w-lg overflow-hidden rounded-t-2xl bg-white shadow-2xl sm:rounded-2xl"
+            className="relative w-full max-w-lg overflow-hidden rounded-t-2xl bg-surface shadow-2xl ring-1 ring-line sm:rounded-2xl"
           >
             <div className="flex items-center justify-between bg-brand-600 px-6 py-4 text-white">
               <div>
                 <h3 className="text-lg font-bold">Enquire Now</h3>
-                <p className="text-xs text-brand-100">Speak with our advisor</p>
+                <p className="text-xs text-blue-100">Speak with our advisor</p>
               </div>
               <button
                 onClick={handleClose}
@@ -183,7 +183,7 @@ export function EnquiryProvider({ children }: { children: ReactNode }) {
 }
 
 const inputClass =
-  "w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-ink outline-none transition-colors placeholder:text-slate-400 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20";
+  "w-full rounded-lg border border-line bg-surface px-3.5 py-2.5 text-sm text-ink outline-none transition-colors placeholder:text-ink-soft/60 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20";
 
 function Field({
   label,

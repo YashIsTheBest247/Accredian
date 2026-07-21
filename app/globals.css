@@ -20,10 +20,34 @@
   --color-ink: #101828;
   --color-ink-soft: #48546b;
 
+  /* Semantic surface tokens — overridden in dark mode below */
+  --color-page: #ffffff;
+  --color-surface: #ffffff;
+  --color-surface-2: #f6f8fc;
+  --color-line: #e6eaf0;
+
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 
   --shadow-soft: 0 10px 40px -12px rgba(20, 29, 75, 0.18);
   --shadow-card: 0 4px 24px -8px rgba(20, 29, 75, 0.14);
+}
+
+/* Enable class/attribute-based dark variant (`dark:` utilities). */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* Dark theme: remap semantic tokens + soften the light-blue accents. */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  /* Warm charcoal / editorial dark — cream text, low-contrast surfaces. */
+  --color-page: #0e0f0d;
+  --color-surface: #181915;
+  --color-surface-2: #131310;
+  --color-line: #2c2d27;
+  --color-ink: #eae8e1;
+  --color-ink-soft: #9c9e93;
+  /* Soft warm elevated chips replace the light-blue accent fills. */
+  --color-brand-50: #1e1f19;
+  --color-brand-100: #26271f;
 }
 
 @layer base {
@@ -31,11 +55,12 @@
     scroll-behavior: smooth;
   }
   section[id] {
-    scroll-margin-top: 5.5rem;
+    scroll-margin-top: 4.5rem;
   }
   body {
-    @apply bg-white text-ink antialiased;
+    @apply bg-page text-ink antialiased;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
   ::selection {
     @apply bg-brand-600 text-white;
@@ -72,5 +97,11 @@
   .reveal.is-visible {
     opacity: 1;
     transform: translateY(0);
+  }
+  .client-wordmark {
+    color: var(--lc);
+  }
+  :root[data-theme="dark"] .client-wordmark {
+    color: var(--lcd, var(--lc));
   }
 }

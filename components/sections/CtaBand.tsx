@@ -17,7 +17,7 @@ export function CtaBand() {
                 <h2 className="text-2xl font-extrabold leading-snug sm:text-3xl">
                   Want to Learn More About Our Training Solutions?
                 </h2>
-                <p className="mt-2 text-brand-100">Get Expert Guidance for Your Team&apos;s Success!</p>
+                <p className="mt-2 text-blue-100">Get Expert Guidance for Your Team&apos;s Success!</p>
               </div>
             </div>
             <EnquireButton variant="secondary" size="lg" className="shrink-0">

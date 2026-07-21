@@ -14,7 +14,7 @@ const shades = [
 
 export function AccredianEdge() {
   return (
-    <section id="edge" className="bg-white py-20 sm:py-24">
+    <section id="edge" className="bg-surface py-14 sm:py-20">
       <div className="container-page">
         <Heading
           title={<>The <Hl>Accredian Edge</Hl></>}
@@ -22,10 +22,10 @@ export function AccredianEdge() {
         />
 
         {/* Desktop: zigzag timeline on a shared baseline */}
-        <div className="relative mt-20 hidden lg:block">
+        <div className="relative mt-14 hidden lg:block">
           <div className="relative h-[26rem]">
             {/* dashed baseline */}
-            <div className="absolute inset-x-6 top-1/2 -translate-y-1/2 border-t-2 border-dashed border-slate-300" />
+            <div className="absolute inset-x-6 top-1/2 -translate-y-1/2 border-t-2 border-dashed border-line" />
 
             <div className="relative grid h-full grid-cols-7">
               {edgeItems.map((item, i) => {
@@ -58,7 +58,7 @@ export function AccredianEdge() {
                       />
 
                       {/* double-ring badge */}
-                      <span className="relative z-10 rounded-full bg-white p-1.5 shadow-[0_10px_25px_-8px_rgba(16,24,40,0.35)] ring-1 ring-slate-100">
+                      <span className="relative z-10 rounded-full bg-surface p-1.5 shadow-[0_10px_25px_-8px_rgba(16,24,40,0.35)] ring-1 ring-line">
                         <span
                           className={`grid h-[4.5rem] w-[4.5rem] place-items-center rounded-full bg-gradient-to-br text-white ${shades[i]}`}
                         >
@@ -83,8 +83,8 @@ export function AccredianEdge() {
         {/* Mobile: vertical list */}
         <div className="mt-12 flex flex-col gap-5 lg:hidden">
           {edgeItems.map((item, i) => (
-            <div key={item.title} className="flex items-start gap-4 rounded-2xl bg-slate-50 p-4">
-              <span className="rounded-full bg-white p-1 shadow-sm">
+            <div key={item.title} className="flex items-start gap-4 rounded-2xl bg-surface-2 p-4">
+              <span className="rounded-full bg-surface p-1 shadow-sm">
                 <span className={`grid h-12 w-12 place-items-center rounded-full bg-gradient-to-br text-white ${shades[i]}`}>
                   <item.icon className="h-6 w-6" />
                 </span>

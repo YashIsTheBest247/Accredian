@@ -20,7 +20,7 @@ const companyLinks = ["About", "Blog", "Why Accredian"];
 
 export function Footer() {
   return (
-    <footer className="border-t border-slate-200 bg-white">
+    <footer className="border-t border-line bg-surface">
       <div className="container-page py-14">
         {/* Top: logo + enquire */}
         <div className="flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
@@ -32,7 +32,7 @@ export function Footer() {
                   key={label}
                   href="#"
                   aria-label={label}
-                  className="grid h-10 w-10 place-items-center rounded-lg bg-slate-100 text-ink transition-colors hover:bg-brand-600 hover:text-white"
+                  className="grid h-10 w-10 place-items-center rounded-lg bg-surface-2 text-ink transition-colors hover:bg-brand-600 hover:text-white"
                 >
                   <Icon className="h-5 w-5" />
                 </a>
@@ -46,7 +46,7 @@ export function Footer() {
           </div>
         </div>
 
-        <hr className="my-10 border-slate-200" />
+        <hr className="my-10 border-line" />
 
         {/* Columns */}
         <div className="grid gap-10 sm:grid-cols-2">
@@ -78,7 +78,7 @@ export function Footer() {
           </div>
         </div>
 
-        <hr className="my-10 border-slate-200" />
+        <hr className="my-10 border-line" />
 
         <p className="text-center text-sm text-ink-soft">
           © 2026 Accredian A Brand of FullStack Education Pvt Ltd. All Rights Reserved

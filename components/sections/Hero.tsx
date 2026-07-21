@@ -7,7 +7,7 @@ export function Hero() {
   return (
     <section id="home" className="px-4 pt-20 sm:px-6 lg:pt-24">
       <div className="mx-auto max-w-[88rem]">
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-50 via-brand-50 to-white px-6 py-12 sm:px-10 lg:px-14 lg:pt-16">
+        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-50 via-brand-50 to-surface px-6 py-12 sm:px-10 lg:px-14 lg:pt-16">
           <div className="pointer-events-none absolute -right-24 top-0 h-96 w-96 rounded-full bg-brand-200/40 blur-3xl" />
           <div className="grid items-end gap-10 lg:grid-cols-[1.05fr_0.95fr]">
             {/* Copy */}
@@ -49,13 +49,13 @@ export function Hero() {
                 />
               </div>
 
-              <div className="absolute left-1 top-6 hidden rounded-2xl bg-white px-4 py-3 shadow-lg sm:block">
+              <div className="absolute left-1 top-6 hidden rounded-2xl bg-surface px-4 py-3 shadow-lg ring-1 ring-line sm:block">
                 <p className="text-[0.7rem] font-medium text-ink-soft">Avg. rating</p>
                 <p className="flex items-center gap-1 text-base font-bold text-ink">
                   4.8 <IconStar className="h-4 w-4 text-accent-500" />
                 </p>
               </div>
-              <div className="absolute -bottom-3 right-3 hidden rounded-2xl bg-white px-4 py-3 shadow-lg sm:block">
+              <div className="absolute -bottom-3 right-3 hidden rounded-2xl bg-surface px-4 py-3 shadow-lg ring-1 ring-line sm:block">
                 <p className="text-base font-bold text-brand-600">10K+</p>
                 <p className="text-[0.7rem] font-medium text-ink-soft">Professionals trained</p>
               </div>

@@ -49,16 +49,26 @@ export const stats: Stat[] = [
   { value: "5K+", label: "Active Learners Engaged In Dynamic Courses" },
 ];
 
-/* ---------- Clients / Partnerships ---------- */
-export const clients: string[] = [
-  "Reliance",
-  "HCL",
-  "IBM",
-  "CRIF",
-  "ADP",
-  "Bayer",
-  "Genpact",
-  "Fractal",
+/* ---------- Clients / Partnerships ----------
+ * `file` points to an optional real logo in public/images/logos/.
+ * If the file is absent, a styled wordmark (color + optional sub) renders instead.
+ */
+export type Client = {
+  name: string;
+  slug: string;
+  color: string;
+  darkColor: string;
+  sub?: string;
+  serif?: boolean;
+};
+
+export const clients: Client[] = [
+  { name: "Reliance", slug: "reliance", color: "#1b2a5b", darkColor: "#aab8e6", sub: "Industries Limited", serif: true },
+  { name: "HCL", slug: "hcl", color: "#0f6fc6", darkColor: "#5aa0f2" },
+  { name: "IBM", slug: "ibm", color: "#1f70c7", darkColor: "#5aa0f2" },
+  { name: "CRIF", slug: "crif", color: "#00398c", darkColor: "#7aa6ea", sub: "Together to the next level" },
+  { name: "ADP", slug: "adp", color: "#cc0000", darkColor: "#ff5a5a" },
+  { name: "Bayer", slug: "bayer", color: "#10ae4d", darkColor: "#3fd589" },
 ];
 
 /* ---------- Accredian Edge (timeline) ---------- */

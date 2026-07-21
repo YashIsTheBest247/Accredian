@@ -4,14 +4,14 @@ import { stats } from "@/lib/data";
 
 export function Stats() {
   return (
-    <section id="stats" className="py-20 sm:py-24">
+    <section id="stats" className="py-14 sm:py-20">
       <div className="container-page">
         <Heading
           title={<>Our <Hl>Track Record</Hl></>}
           subtitle={<>The Numbers Behind <Hl>Our Success</Hl></>}
         />
 
-        <div className="mt-14 grid gap-10 sm:grid-cols-3 sm:gap-0 sm:divide-x sm:divide-slate-200">
+        <div className="mt-12 grid gap-10 sm:grid-cols-3 sm:gap-0 sm:divide-x sm:divide-line">
           {stats.map((s, i) => (
             <Reveal key={s.label} delay={i * 90}>
               <div className="flex flex-col items-center px-6 text-center">

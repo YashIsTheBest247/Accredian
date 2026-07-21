@@ -5,7 +5,7 @@ import { courseSegments } from "@/lib/data";
 
 export function CourseSegmentation() {
   return (
-    <section className="bg-slate-50/70 py-20 sm:py-24">
+    <section className="bg-surface-2 py-14 sm:py-20">
       <div className="container-page">
         <Heading
           title={<>Tailored <Hl>Course Segmentation</Hl></>}
@@ -15,7 +15,7 @@ export function CourseSegmentation() {
         <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {courseSegments.map((c, i) => (
             <Reveal key={c.title} delay={i * 80}>
-              <article className="flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-[0_8px_30px_-16px_rgba(16,24,40,0.25)]">
+              <article className="flex h-full flex-col overflow-hidden rounded-2xl bg-surface shadow-[0_8px_30px_-16px_rgba(16,24,40,0.25)]">
                 <div className="relative h-44 w-full overflow-hidden">
                   <Image
                     src={c.image}

@@ -13,7 +13,7 @@ export function Faqs() {
   const category = faqCategories[activeCat];
 
   return (
-    <section id="faqs" className="bg-slate-50/70 py-20 sm:py-24">
+    <section id="faqs" className="bg-surface-2 py-14 sm:py-20">
       <div className="container-page">
         <Heading
           align="left"
@@ -32,8 +32,8 @@ export function Faqs() {
                 }}
                 className={`rounded-2xl border px-6 py-5 text-center text-lg font-bold transition-all ${
                   activeCat === i
-                    ? "border-brand-200 bg-white text-brand-600 shadow-md"
-                    : "border-slate-200 bg-white/50 text-ink-soft hover:bg-white"
+                    ? "border-brand-200 bg-surface text-brand-600 shadow-md"
+                    : "border-line bg-surface/50 text-ink-soft hover:bg-surface"
                 }`}
               >
                 {cat.label}
@@ -42,7 +42,7 @@ export function Faqs() {
           </div>
 
           {/* Accordion */}
-          <div className="flex flex-col divide-y divide-slate-200 rounded-2xl bg-white px-6 shadow-sm sm:px-8">
+          <div className="flex flex-col divide-y divide-line rounded-2xl bg-surface px-6 shadow-sm sm:px-8">
             {category.items.map((item, i) => {
               const isOpen = openItem === i;
               return (
