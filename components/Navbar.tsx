@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { Logo } from "@/components/Logo";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { IconMenu, IconClose } from "@/components/icons";
 import { navLinks } from "@/lib/data";
 
 export function Navbar() {
@@ -38,12 +37,22 @@ export function Navbar() {
     return () => observer.disconnect();
   }, []);
 
+  // Lock body scroll while the mobile menu is open.
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
     };
   }, [open]);
+
+  // Auto-close the menu when resizing up to desktop.
+  useEffect(() => {
+    const onResize = () => {
+      if (window.innerWidth >= 1024) setOpen(false);
+    };
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
 
   const scrollTo = (id: string) => (e: React.MouseEvent) => {
     e.preventDefault();
@@ -59,7 +68,7 @@ export function Navbar() {
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 bg-surface transition-shadow duration-300 ${
-        scrolled ? "shadow-[0_4px_20px_-8px_rgba(16,24,40,0.18)]" : ""
+        scrolled || open ? "shadow-[0_4px_20px_-8px_rgba(16,24,40,0.18)]" : ""
       }`}
     >
       <nav className="container-page flex h-16 items-center justify-between lg:h-20">
@@ -74,9 +83,7 @@ export function Navbar() {
                 href={`#${link.id}`}
                 onClick={scrollTo(link.id)}
                 className={`relative py-1 text-[0.95rem] font-medium transition-colors ${
-                  active === link.id
-                    ? "text-brand-600"
-                    : "text-ink hover:text-brand-600"
+                  active === link.id ? "text-brand-600" : "text-ink hover:text-brand-600"
                 }`}
               >
                 {link.label}
@@ -92,14 +99,31 @@ export function Navbar() {
 
         <div className="flex items-center gap-1">
           <ThemeToggle />
+          {/* Animated hamburger → X */}
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
-            className="grid h-10 w-10 place-items-center rounded-lg text-ink lg:hidden"
+            className="relative grid h-10 w-10 place-items-center rounded-lg text-ink lg:hidden"
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
           >
-            {open ? <IconClose className="h-6 w-6" /> : <IconMenu className="h-6 w-6" />}
+            <span className="relative block h-4 w-6">
+              <span
+                className={`absolute left-0 block h-0.5 w-6 rounded-full bg-current transition-all duration-300 ease-in-out ${
+                  open ? "top-1/2 -translate-y-1/2 rotate-45" : "top-0"
+                }`}
+              />
+              <span
+                className={`absolute left-0 top-1/2 block h-0.5 w-6 -translate-y-1/2 rounded-full bg-current transition-all duration-200 ease-in-out ${
+                  open ? "opacity-0" : "opacity-100"
+                }`}
+              />
+              <span
+                className={`absolute left-0 block h-0.5 w-6 rounded-full bg-current transition-all duration-300 ease-in-out ${
+                  open ? "top-1/2 -translate-y-1/2 -rotate-45" : "bottom-0"
+                }`}
+              />
+            </span>
           </button>
         </div>
       </nav>
@@ -107,17 +131,20 @@ export function Navbar() {
       {/* Mobile menu */}
       <div className={`lg:hidden ${open ? "pointer-events-auto" : "pointer-events-none"}`}>
         <div
-          className={`container-page overflow-hidden border-t border-line bg-surface transition-all duration-300 ${
+          className={`container-page overflow-hidden border-t border-line bg-surface transition-all duration-300 ease-in-out ${
             open ? "max-h-[80vh] py-4 opacity-100" : "max-h-0 py-0 opacity-0"
           }`}
         >
           <ul className="flex flex-col gap-1">
-            {navLinks.map((link) => (
+            {navLinks.map((link, i) => (
               <li key={link.id}>
                 <a
                   href={`#${link.id}`}
                   onClick={scrollTo(link.id)}
-                  className={`block rounded-lg px-3 py-3 text-base font-medium ${
+                  style={{ transitionDelay: open ? `${i * 40 + 60}ms` : "0ms" }}
+                  className={`block rounded-lg px-4 py-3 text-base font-medium transition-all duration-300 ${
+                    open ? "translate-x-0 opacity-100" : "-translate-x-2 opacity-0"
+                  } ${
                     active === link.id
                       ? "bg-brand-50 text-brand-600"
                       : "text-ink hover:bg-surface-2"

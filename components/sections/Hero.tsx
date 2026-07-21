@@ -38,7 +38,7 @@ export function Hero() {
 
             {/* Visual */}
             <div className="relative">
-              <div className="relative ml-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-3xl sm:aspect-[5/5]">
+              <div className="relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden rounded-3xl sm:max-w-md sm:aspect-square lg:ml-auto lg:mr-0">
                 <Image
                   src="/images/hero-people.jpg"
                   alt="Two professionals collaborating with a laptop"
