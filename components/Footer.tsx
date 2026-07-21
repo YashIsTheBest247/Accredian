@@ -9,11 +9,11 @@ import {
 } from "@/components/icons";
 
 const socials = [
-  { label: "Facebook", Icon: IconFacebook },
-  { label: "LinkedIn", Icon: IconLinkedin },
-  { label: "Twitter", Icon: IconTwitter },
-  { label: "Instagram", Icon: IconInstagram },
-  { label: "YouTube", Icon: IconYoutube },
+  { label: "Facebook", Icon: IconFacebook, href: "https://www.facebook.com/accredianlearn" },
+  { label: "LinkedIn", Icon: IconLinkedin, href: "https://www.linkedin.com/school/accredianedu/" },
+  { label: "Twitter", Icon: IconTwitter, href: "https://x.com/accredianedu" },
+  { label: "Instagram", Icon: IconInstagram, href: "https://www.instagram.com/accredian_edu" },
+  { label: "YouTube", Icon: IconYoutube, href: "https://www.youtube.com/channel/UCE0L_4ADPU2iyKnDJ0xRzyA" },
 ];
 
 const companyLinks = ["About", "Blog", "Why Accredian"];
@@ -27,11 +27,13 @@ export function Footer() {
           <div>
             <Logo />
             <div className="mt-6 flex gap-3">
-              {socials.map(({ label, Icon }) => (
+              {socials.map(({ label, Icon, href }) => (
                 <a
                   key={label}
-                  href="#"
-                  aria-label={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Accredian on ${label}`}
                   className="grid h-10 w-10 place-items-center rounded-lg bg-surface-2 text-ink transition-colors hover:bg-brand-600 hover:text-white"
                 >
                   <Icon className="h-5 w-5" />
