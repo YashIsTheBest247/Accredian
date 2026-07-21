@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import {
   createContext,
   useCallback,
@@ -10,7 +11,7 @@ import {
   type ReactNode,
 } from "react";
 import { Button } from "@/components/ui/Button";
-import { IconClose, IconCheckCircle, IconArrowRight } from "@/components/icons";
+import { IconClose, IconCheckCircle, IconArrowRight, IconChevronDown } from "@/components/icons";
 
 type EnquiryContextValue = { open: () => void; close: () => void };
 
@@ -27,19 +28,33 @@ type Status = "idle" | "loading" | "success" | "error";
 const initialForm = {
   name: "",
   email: "",
+  countryCode: "+91",
+  phone: "",
   company: "",
-  teamSize: "1-50",
-  interest: "Data Science & AI",
-  message: "",
+  domain: "",
+  candidates: "",
+  mode: "",
 };
 
-const teamSizes = ["1-50", "51-200", "201-1000", "1000+"];
-const interests = [
+const countryCodes = [
+  { code: "+91", flag: "🇮🇳" },
+  { code: "+1", flag: "🇺🇸" },
+  { code: "+44", flag: "🇬🇧" },
+  { code: "+971", flag: "🇦🇪" },
+  { code: "+61", flag: "🇦🇺" },
+  { code: "+65", flag: "🇸🇬" },
+];
+
+const domains = [
   "Data Science & AI",
   "Generative AI",
   "Product Management",
   "Leadership & Strategy",
+  "Digital Transformation",
+  "Other",
 ];
+
+const modes = ["Online", "Offline / On-site", "Hybrid"];
 
 export function EnquiryProvider({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false); // intent to be open
@@ -106,7 +121,7 @@ export function EnquiryProvider({ children }: { children: ReactNode }) {
 
   function handleClose() {
     close();
-    setTimeout(() => setStatus("idle"), 200);
+    setTimeout(() => setStatus("idle"), 250);
   }
 
   return (
@@ -125,79 +140,144 @@ export function EnquiryProvider({ children }: { children: ReactNode }) {
           <div
             role="dialog"
             aria-modal="true"
-            aria-label="Enquiry form"
-            className={`relative flex max-h-[92dvh] w-full max-w-lg flex-col overflow-hidden rounded-t-2xl bg-surface shadow-2xl ring-1 ring-line transition-all duration-300 ease-out sm:max-h-[90dvh] sm:rounded-2xl ${
+            aria-label="Enquire Now"
+            className={`relative flex max-h-[92dvh] w-full max-w-3xl overflow-hidden rounded-t-2xl bg-surface shadow-2xl ring-1 ring-line transition-all duration-300 ease-out sm:max-h-[88dvh] sm:rounded-2xl ${
               show
                 ? "translate-y-0 opacity-100 sm:scale-100"
                 : "translate-y-full opacity-0 sm:translate-y-0 sm:scale-95"
             }`}
           >
-            <div className="flex shrink-0 items-center justify-between bg-brand-600 px-6 py-4 text-white">
-              <div>
-                <h3 className="text-lg font-bold">Enquire Now</h3>
-                <p className="text-xs text-blue-100">Speak with our advisor</p>
-              </div>
-              <button
-                onClick={handleClose}
-                aria-label="Close"
-                className="grid h-9 w-9 place-items-center rounded-lg text-white/90 hover:bg-white/15"
-              >
-                <IconClose className="h-5 w-5" />
-              </button>
+            {/* Left image (desktop only) */}
+            <div className="relative hidden w-[42%] shrink-0 sm:block">
+              <Image
+                src="/images/join-people.jpg"
+                alt="Enterprise professionals meeting"
+                fill
+                sizes="(max-width: 640px) 0px, 320px"
+                className="object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-brand-950/40 to-transparent" />
             </div>
 
-            <div className="overflow-y-auto">
-            {status === "success" ? (
-              <div className="flex flex-col items-center justify-center px-6 py-12 text-center">
-                <IconCheckCircle className="h-14 w-14 text-green-500" />
-                <h4 className="mt-4 text-xl font-bold text-ink">Thank you!</h4>
-                <p className="mt-2 max-w-xs text-sm text-ink-soft">
-                  Your enquiry is in. A learning strategist will reach out within one
-                  business day.
-                </p>
-                <Button variant="secondary" className="mt-6" onClick={handleClose}>
-                  Done
-                </Button>
+            {/* Right form column */}
+            <div className="flex min-w-0 flex-1 flex-col">
+              <div className="flex shrink-0 items-center justify-between border-b border-line px-6 py-4">
+                <h3 className="text-2xl font-extrabold text-ink">Enquire Now</h3>
+                <button
+                  onClick={handleClose}
+                  aria-label="Close"
+                  className="grid h-9 w-9 place-items-center rounded-lg text-ink-soft transition-colors hover:bg-surface-2 hover:text-ink"
+                >
+                  <IconClose className="h-5 w-5" />
+                </button>
               </div>
-            ) : (
-              <form onSubmit={onSubmit} className="flex flex-col gap-4 px-6 py-6" noValidate>
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <Field label="Full name" id="e-name">
-                    <input id="e-name" required value={form.name} onChange={update("name")} placeholder="Jane Doe" className={inputClass} />
-                  </Field>
-                  <Field label="Work email" id="e-email">
-                    <input id="e-email" type="email" required value={form.email} onChange={update("email")} placeholder="jane@company.com" className={inputClass} />
-                  </Field>
-                </div>
-                <Field label="Company" id="e-company">
-                  <input id="e-company" required value={form.company} onChange={update("company")} placeholder="Company Inc." className={inputClass} />
-                </Field>
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <Field label="Team size" id="e-team">
-                    <select id="e-team" value={form.teamSize} onChange={update("teamSize")} className={inputClass}>
-                      {teamSizes.map((t) => <option key={t}>{t}</option>)}
-                    </select>
-                  </Field>
-                  <Field label="Interested in" id="e-interest">
-                    <select id="e-interest" value={form.interest} onChange={update("interest")} className={inputClass}>
-                      {interests.map((t) => <option key={t}>{t}</option>)}
-                    </select>
-                  </Field>
-                </div>
-                <Field label="Message" id="e-message" optional>
-                  <textarea id="e-message" rows={2} value={form.message} onChange={update("message")} placeholder="Tell us about your goals..." className={`${inputClass} resize-none`} />
-                </Field>
 
-                {status === "error" && (
-                  <p className="rounded-lg bg-red-50 px-4 py-2.5 text-sm font-medium text-red-700">{error}</p>
+              <div className="overflow-y-auto px-6 py-6">
+                {status === "success" ? (
+                  <div className="flex min-h-[20rem] flex-col items-center justify-center text-center">
+                    <IconCheckCircle className="h-14 w-14 text-green-500" />
+                    <h4 className="mt-4 text-xl font-bold text-ink">Thank you!</h4>
+                    <p className="mt-2 max-w-xs text-sm text-ink-soft">
+                      Your enquiry is in. A learning strategist will reach out within one
+                      business day.
+                    </p>
+                    <Button variant="secondary" className="mt-6" onClick={handleClose}>
+                      Done
+                    </Button>
+                  </div>
+                ) : (
+                  <form onSubmit={onSubmit} className="flex flex-col gap-6" noValidate>
+                    <input
+                      aria-label="Name"
+                      required
+                      value={form.name}
+                      onChange={update("name")}
+                      placeholder="Enter Name"
+                      className={underline}
+                    />
+                    <input
+                      aria-label="Email"
+                      type="email"
+                      required
+                      value={form.email}
+                      onChange={update("email")}
+                      placeholder="Enter Email"
+                      className={underline}
+                    />
+
+                    {/* Phone with country code */}
+                    <div className="flex items-center gap-3 border-b border-line focus-within:border-brand-500">
+                      <select
+                        aria-label="Country code"
+                        value={form.countryCode}
+                        onChange={update("countryCode")}
+                        className="shrink-0 bg-transparent py-3 text-sm text-ink outline-none"
+                      >
+                        {countryCodes.map((c) => (
+                          <option key={c.code} value={c.code}>
+                            {c.flag} {c.code}
+                          </option>
+                        ))}
+                      </select>
+                      <input
+                        aria-label="Phone number"
+                        type="tel"
+                        inputMode="numeric"
+                        value={form.phone}
+                        onChange={update("phone")}
+                        placeholder="Enter phone number"
+                        className="min-w-0 flex-1 border-0 bg-transparent py-3 text-sm text-ink outline-none placeholder:text-ink-soft/70"
+                      />
+                    </div>
+
+                    <input
+                      aria-label="Company name"
+                      required
+                      value={form.company}
+                      onChange={update("company")}
+                      placeholder="Enter company name"
+                      className={underline}
+                    />
+
+                    <SelectField
+                      aria-label="Domain"
+                      value={form.domain}
+                      onChange={update("domain")}
+                      placeholder="Select Domain"
+                      options={domains}
+                    />
+
+                    <input
+                      aria-label="Number of candidates"
+                      type="number"
+                      min={1}
+                      value={form.candidates}
+                      onChange={update("candidates")}
+                      placeholder="Enter No. of candidates"
+                      className={underline}
+                    />
+
+                    <SelectField
+                      aria-label="Mode of Delivery"
+                      value={form.mode}
+                      onChange={update("mode")}
+                      placeholder="Select Mode of Delivery *"
+                      options={modes}
+                    />
+
+                    {status === "error" && (
+                      <p className="rounded-lg bg-red-50 px-4 py-2.5 text-sm font-medium text-red-700">
+                        {error}
+                      </p>
+                    )}
+
+                    <Button type="submit" className="mt-1 w-full" disabled={status === "loading"}>
+                      {status === "loading" ? "Submitting..." : "Submit"}
+                      {status !== "loading" && <IconArrowRight className="h-4 w-4" />}
+                    </Button>
+                  </form>
                 )}
-
-                <Button type="submit" className="w-full" disabled={status === "loading"}>
-                  {status === "loading" ? "Submitting..." : "Submit enquiry"}
-                  {status !== "loading" && <IconArrowRight className="h-4 w-4" />}
-                </Button>
-              </form>
-            )}
+              </div>
             </div>
           </div>
         </div>
@@ -206,27 +286,42 @@ export function EnquiryProvider({ children }: { children: ReactNode }) {
   );
 }
 
-const inputClass =
-  "w-full rounded-lg border border-line bg-surface px-3.5 py-2.5 text-sm text-ink outline-none transition-colors placeholder:text-ink-soft/60 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20";
+const underline =
+  "w-full border-0 border-b border-line bg-transparent px-0 py-3 text-sm text-ink outline-none transition-colors placeholder:text-ink-soft/70 focus:border-brand-500";
 
-function Field({
-  label,
-  id,
-  optional,
-  children,
+function SelectField({
+  value,
+  onChange,
+  placeholder,
+  options,
+  "aria-label": ariaLabel,
 }: {
-  label: string;
-  id: string;
-  optional?: boolean;
-  children: ReactNode;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  placeholder: string;
+  options: string[];
+  "aria-label": string;
 }) {
   return (
-    <label htmlFor={id} className="flex flex-col gap-1.5">
-      <span className="text-sm font-semibold text-ink">
-        {label}
-        {optional && <span className="ml-1 font-normal text-ink-soft">(optional)</span>}
-      </span>
-      {children}
-    </label>
+    <div className="relative border-b border-line focus-within:border-brand-500">
+      <select
+        aria-label={ariaLabel}
+        value={value}
+        onChange={onChange}
+        className={`w-full appearance-none bg-transparent py-3 pr-8 text-sm outline-none ${
+          value ? "text-ink" : "text-ink-soft/70"
+        }`}
+      >
+        <option value="" disabled>
+          {placeholder}
+        </option>
+        {options.map((o) => (
+          <option key={o} value={o} className="text-ink">
+            {o}
+          </option>
+        ))}
+      </select>
+      <IconChevronDown className="pointer-events-none absolute right-1 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-soft" />
+    </div>
   );
 }

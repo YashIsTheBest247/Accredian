@@ -3,10 +3,12 @@ import { NextResponse } from "next/server";
 export type Lead = {
   name: string;
   email: string;
+  countryCode?: string;
+  phone?: string;
   company: string;
-  teamSize: string;
-  interest: string;
-  message?: string;
+  domain?: string;
+  candidates?: string;
+  mode: string;
 };
 
 /**
@@ -19,11 +21,12 @@ const leads: (Lead & { id: string; createdAt: string })[] = [];
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function validate(body: Partial<Lead>): string | null {
-  if (!body.name || body.name.trim().length < 2) return "Please enter your full name.";
+  if (!body.name || body.name.trim().length < 2) return "Please enter your name.";
   if (!body.email || !emailRegex.test(body.email))
-    return "Please enter a valid work email.";
+    return "Please enter a valid email address.";
   if (!body.company || body.company.trim().length < 2)
     return "Please enter your company name.";
+  if (!body.mode) return "Please select a mode of delivery.";
   return null;
 }
 
@@ -44,10 +47,12 @@ export async function POST(request: Request) {
     id: crypto.randomUUID(),
     name: body.name!.trim(),
     email: body.email!.trim(),
+    countryCode: body.countryCode || "",
+    phone: body.phone?.trim() || "",
     company: body.company!.trim(),
-    teamSize: body.teamSize || "unspecified",
-    interest: body.interest || "unspecified",
-    message: body.message?.trim() || "",
+    domain: body.domain || "unspecified",
+    candidates: body.candidates?.toString().trim() || "",
+    mode: body.mode!,
     createdAt: new Date().toISOString(),
   };
 
