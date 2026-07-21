@@ -108,9 +108,9 @@ export function EnquiryProvider({ children }: { children: ReactNode }) {
             role="dialog"
             aria-modal="true"
             aria-label="Enquiry form"
-            className="relative w-full max-w-lg overflow-hidden rounded-t-2xl bg-surface shadow-2xl ring-1 ring-line sm:rounded-2xl"
+            className="relative flex max-h-[92dvh] w-full max-w-lg flex-col overflow-hidden rounded-t-2xl bg-surface shadow-2xl ring-1 ring-line sm:max-h-[90dvh] sm:rounded-2xl"
           >
-            <div className="flex items-center justify-between bg-brand-600 px-6 py-4 text-white">
+            <div className="flex shrink-0 items-center justify-between bg-brand-600 px-6 py-4 text-white">
               <div>
                 <h3 className="text-lg font-bold">Enquire Now</h3>
                 <p className="text-xs text-blue-100">Speak with our advisor</p>
@@ -124,6 +124,7 @@ export function EnquiryProvider({ children }: { children: ReactNode }) {
               </button>
             </div>
 
+            <div className="overflow-y-auto">
             {status === "success" ? (
               <div className="flex flex-col items-center justify-center px-6 py-12 text-center">
                 <IconCheckCircle className="h-14 w-14 text-green-500" />
@@ -175,6 +176,7 @@ export function EnquiryProvider({ children }: { children: ReactNode }) {
                 </Button>
               </form>
             )}
+            </div>
           </div>
         </div>
       )}
