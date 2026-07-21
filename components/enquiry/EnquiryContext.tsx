@@ -42,7 +42,9 @@ const interests = [
 ];
 
 export function EnquiryProvider({ children }: { children: ReactNode }) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false); // intent to be open
+  const [render, setRender] = useState(false); // kept mounted through exit animation
+  const [show, setShow] = useState(false); // drives enter/exit transition classes
   const [form, setForm] = useState(initialForm);
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
@@ -50,12 +52,26 @@ export function EnquiryProvider({ children }: { children: ReactNode }) {
   const open = useCallback(() => setIsOpen(true), []);
   const close = useCallback(() => setIsOpen(false), []);
 
+  // Mount → next frame animate in; on close, animate out then unmount.
   useEffect(() => {
-    document.body.style.overflow = isOpen ? "hidden" : "";
+    if (isOpen) {
+      setRender(true);
+      const raf = requestAnimationFrame(() =>
+        requestAnimationFrame(() => setShow(true))
+      );
+      return () => cancelAnimationFrame(raf);
+    }
+    setShow(false);
+    const t = setTimeout(() => setRender(false), 300);
+    return () => clearTimeout(t);
+  }, [isOpen]);
+
+  useEffect(() => {
+    document.body.style.overflow = render ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
     };
-  }, [isOpen]);
+  }, [render]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && close();
@@ -97,10 +113,12 @@ export function EnquiryProvider({ children }: { children: ReactNode }) {
     <EnquiryContext.Provider value={{ open, close }}>
       {children}
 
-      {isOpen && (
+      {render && (
         <div className="fixed inset-0 z-[100] flex items-end justify-center p-0 sm:items-center sm:p-4">
           <div
-            className="absolute inset-0 bg-ink/50 backdrop-blur-sm"
+            className={`absolute inset-0 bg-ink/50 backdrop-blur-sm transition-opacity duration-300 ease-out ${
+              show ? "opacity-100" : "opacity-0"
+            }`}
             onClick={handleClose}
             aria-hidden
           />
@@ -108,7 +126,11 @@ export function EnquiryProvider({ children }: { children: ReactNode }) {
             role="dialog"
             aria-modal="true"
             aria-label="Enquiry form"
-            className="relative flex max-h-[92dvh] w-full max-w-lg flex-col overflow-hidden rounded-t-2xl bg-surface shadow-2xl ring-1 ring-line sm:max-h-[90dvh] sm:rounded-2xl"
+            className={`relative flex max-h-[92dvh] w-full max-w-lg flex-col overflow-hidden rounded-t-2xl bg-surface shadow-2xl ring-1 ring-line transition-all duration-300 ease-out sm:max-h-[90dvh] sm:rounded-2xl ${
+              show
+                ? "translate-y-0 opacity-100 sm:scale-100"
+                : "translate-y-full opacity-0 sm:translate-y-0 sm:scale-95"
+            }`}
           >
             <div className="flex shrink-0 items-center justify-between bg-brand-600 px-6 py-4 text-white">
               <div>
