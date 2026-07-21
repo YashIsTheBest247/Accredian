@@ -7,12 +7,12 @@ export function Hero() {
   return (
     <section id="home" className="px-4 pt-20 sm:px-6 lg:pt-24">
       <div className="mx-auto max-w-[88rem]">
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-50 via-brand-50 to-surface px-6 py-12 sm:px-10 lg:px-14 lg:pt-16">
+        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-50 via-brand-50 to-surface px-6 py-10 sm:px-10 lg:px-14 lg:py-12">
           <div className="pointer-events-none absolute -right-24 top-0 h-96 w-96 rounded-full bg-brand-200/40 blur-3xl" />
-          <div className="grid items-end gap-10 lg:grid-cols-[1.05fr_0.95fr]">
+          <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12">
             {/* Copy */}
-            <div className="relative max-w-xl pb-4 lg:pb-12">
-              <h1 className="text-4xl font-extrabold leading-[1.05] tracking-tight text-ink sm:text-5xl lg:text-6xl">
+            <div className="relative max-w-xl">
+              <h1 className="text-[2rem] font-extrabold leading-[1.08] tracking-tight text-ink sm:text-5xl lg:text-[3.35rem]">
                 Next-Gen <span className="text-brand-600">Expertise</span>
                 <br className="hidden sm:block" /> For Your{" "}
                 <span className="text-brand-600">Enterprise</span>
@@ -38,7 +38,7 @@ export function Hero() {
 
             {/* Visual */}
             <div className="relative">
-              <div className="relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden rounded-3xl sm:max-w-md sm:aspect-square lg:ml-auto lg:mr-0">
+              <div className="relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden rounded-3xl sm:aspect-[5/4] sm:max-w-md lg:mx-0 lg:aspect-auto lg:h-[24rem] lg:max-w-none">
                 <Image
                   src="/images/hero-people.jpg"
                   alt="Two professionals collaborating with a laptop"

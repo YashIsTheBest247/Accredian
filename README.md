@@ -2,6 +2,8 @@
 
 A responsive, component-driven recreation of the [Accredian Enterprise](https://enterprise.accredian.com/) landing page, built with **Next.js (App Router)**, **TypeScript**, and **Tailwind CSS v4**. It includes a full set of landing sections, a sticky responsive navigation, a footer, and a working **lead-capture form backed by a Next.js API route** (the optional bonus).
 
+**🔗 Live demo:** https://accredian-nine-psi.vercel.app/
+
 > Built as a take-home assignment. Focus is on clean structure, reusable components, and thoughtful execution — not pixel-perfect copying.
 
 ---
@@ -169,5 +171,7 @@ npm i -g vercel
 vercel        # preview
 vercel --prod # production
 ```
+
+**Live deployment:** https://accredian-nine-psi.vercel.app/
 
 
