@@ -11,14 +11,17 @@ export function Stats() {
           subtitle={<>The Numbers Behind <Hl>Our Success</Hl></>}
         />
 
-        <div className="mt-12 grid gap-10 sm:grid-cols-3 sm:gap-0 sm:divide-x sm:divide-line">
+        {/* Mobile: pill-left rows separated by dividers. Desktop: 3 centered columns. */}
+        <div className="mt-10 flex flex-col divide-y divide-line sm:mt-12 sm:grid sm:grid-cols-3 sm:divide-y-0 sm:divide-x">
           {stats.map((s, i) => (
             <Reveal key={s.label} delay={i * 90}>
-              <div className="flex flex-col items-center px-6 text-center">
-                <span className="grid min-w-[7rem] place-items-center rounded-full bg-brand-50 px-6 py-3 text-3xl font-extrabold text-brand-600 sm:text-4xl">
+              <div className="flex items-center gap-5 py-7 sm:flex-col sm:justify-center sm:px-6 sm:py-0 sm:text-center">
+                <span className="grid min-w-[5.5rem] shrink-0 place-items-center rounded-full bg-brand-50 px-5 py-3 text-2xl font-extrabold text-brand-600 sm:min-w-[7rem] sm:text-3xl lg:text-4xl">
                   {s.value}
                 </span>
-                <p className="mt-5 max-w-xs text-lg font-medium text-ink">{s.label}</p>
+                <p className="text-lg font-medium leading-snug text-ink sm:mt-5 sm:max-w-xs">
+                  {s.label}
+                </p>
               </div>
             </Reveal>
           ))}

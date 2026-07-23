@@ -22,7 +22,7 @@ export function HowItWorks() {
                   <step.icon className="h-9 w-9" />
                 </span>
                 <h3 className="mt-6 text-xl font-bold text-ink">{step.title}</h3>
-                <p className="mt-3 text-ink-soft">{step.description}</p>
+                <p className="mt-3 hidden text-ink-soft md:block">{step.description}</p>
               </article>
             </Reveal>
           ))}

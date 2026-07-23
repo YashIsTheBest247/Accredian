@@ -14,10 +14,10 @@ export function CatFramework() {
           subtitle={<>Our Proven Approach to <Hl>Learning Excellence</Hl></>}
         />
 
-        <div className="relative mx-auto mt-16 max-w-5xl">
-          {/* weaving S-curve (desktop) */}
+        <div className="relative mx-auto mt-10 max-w-5xl sm:mt-16">
+          {/* Weaving S-curve — shown on all sizes */}
           <svg
-            className="absolute inset-0 hidden h-full w-full text-brand-500 lg:block"
+            className="absolute inset-0 h-full w-full text-brand-500"
             viewBox="0 0 1000 320"
             fill="none"
             preserveAspectRatio="none"
@@ -28,18 +28,23 @@ export function CatFramework() {
               stroke="currentColor"
               strokeWidth="3"
               strokeLinecap="round"
+              vectorEffect="non-scaling-stroke"
             />
           </svg>
 
-          <div className="relative grid gap-14 sm:grid-cols-3">
+          <div className="relative grid grid-cols-3 gap-1 sm:gap-14">
             {catSteps.map((step, i) => {
               const Icon = icons[i];
               return (
                 <Reveal key={step.title} delay={i * 120}>
-                  <div className="mx-auto flex aspect-square w-full max-w-[15rem] flex-col items-center justify-center rounded-full border-2 border-brand-400 bg-surface/90 px-8 text-center shadow-[0_16px_40px_-20px_rgba(26,115,232,0.5)] backdrop-blur">
-                    <Icon className="h-9 w-9 text-brand-600" />
-                    <h3 className="mt-3 text-2xl font-extrabold text-ink">{step.title}</h3>
-                    <p className="mt-2 text-sm leading-snug text-ink-soft">{step.description}</p>
+                  <div className="mx-auto flex aspect-square w-full max-w-[15rem] flex-col items-center justify-center rounded-full border-2 border-brand-400 bg-surface/90 px-2 text-center shadow-[0_16px_40px_-20px_rgba(26,115,232,0.5)] backdrop-blur sm:px-8">
+                    <Icon className="h-5 w-5 text-brand-600 sm:h-9 sm:w-9" />
+                    <h3 className="mt-1.5 text-[0.8rem] font-extrabold text-ink sm:mt-3 sm:text-2xl">
+                      {step.title}
+                    </h3>
+                    <p className="mt-1 text-[0.55rem] leading-snug text-ink-soft sm:mt-2 sm:text-sm">
+                      {step.description}
+                    </p>
                   </div>
                 </Reveal>
               );

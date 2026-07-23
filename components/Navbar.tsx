@@ -128,26 +128,37 @@ export function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile menu */}
-      <div className={`lg:hidden ${open ? "pointer-events-auto" : "pointer-events-none"}`}>
+      {/* Mobile menu — right-aligned floating card panel */}
+      <div
+        className={`fixed inset-0 top-16 z-40 lg:hidden ${
+          open ? "pointer-events-auto" : "pointer-events-none"
+        }`}
+      >
         <div
-          className={`container-page overflow-hidden border-t border-line bg-surface transition-all duration-300 ease-in-out ${
-            open ? "max-h-[80vh] py-4 opacity-100" : "max-h-0 py-0 opacity-0"
+          className={`absolute inset-0 transition-opacity duration-300 ${
+            open ? "opacity-100" : "opacity-0"
+          }`}
+          onClick={() => setOpen(false)}
+          aria-hidden
+        />
+        <div
+          className={`absolute right-4 top-3 w-[62%] max-w-xs origin-top-right overflow-hidden rounded-2xl bg-surface py-3 shadow-[0_18px_50px_-12px_rgba(16,24,40,0.35)] ring-1 ring-line transition-all duration-300 ease-out ${
+            open ? "scale-100 opacity-100" : "pointer-events-none scale-95 opacity-0"
           }`}
         >
-          <ul className="flex flex-col gap-1">
+          <ul className="flex flex-col">
             {navLinks.map((link, i) => (
               <li key={link.id}>
                 <a
                   href={`#${link.id}`}
                   onClick={scrollTo(link.id)}
-                  style={{ transitionDelay: open ? `${i * 40 + 60}ms` : "0ms" }}
-                  className={`block rounded-lg px-4 py-3 text-base font-medium transition-all duration-300 ${
-                    open ? "translate-x-0 opacity-100" : "-translate-x-2 opacity-0"
+                  style={{ transitionDelay: open ? `${i * 35 + 60}ms` : "0ms" }}
+                  className={`block px-6 py-3.5 text-lg transition-all duration-300 ${
+                    open ? "translate-x-0 opacity-100" : "translate-x-2 opacity-0"
                   } ${
                     active === link.id
-                      ? "bg-brand-50 text-brand-600"
-                      : "text-ink hover:bg-surface-2"
+                      ? "font-semibold text-brand-600 underline decoration-2 underline-offset-8"
+                      : "text-ink"
                   }`}
                 >
                   {link.label}

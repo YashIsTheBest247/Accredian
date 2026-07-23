@@ -21,8 +21,8 @@ export function Faqs() {
         />
 
         <div className="mt-12 grid gap-8 lg:grid-cols-[0.8fr_2fr]">
-          {/* Category tabs */}
-          <div className="flex flex-col gap-4">
+          {/* Category tabs — horizontal scroll on mobile, stacked on desktop */}
+          <div className="-mx-5 flex gap-3 overflow-x-auto px-5 pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:mx-0 lg:flex-col lg:gap-4 lg:overflow-visible lg:px-0">
             {faqCategories.map((cat, i) => (
               <button
                 key={cat.key}
@@ -30,7 +30,7 @@ export function Faqs() {
                   setActiveCat(i);
                   setOpenItem(0);
                 }}
-                className={`rounded-2xl border px-6 py-5 text-center text-lg font-bold transition-all ${
+                className={`shrink-0 whitespace-nowrap rounded-2xl border px-6 py-4 text-center text-base font-bold transition-all lg:w-full lg:py-5 lg:text-lg ${
                   activeCat === i
                     ? "border-brand-200 bg-surface text-brand-600 shadow-md"
                     : "border-line bg-surface/50 text-ink-soft hover:bg-surface"

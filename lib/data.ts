@@ -38,7 +38,12 @@ export const navLinks: NavLink[] = [
 ];
 
 /* ---------- Hero ---------- */
-export const heroPoints = ["Tailored Solutions", "Industry Insights", "Expert Guidance"];
+export const heroPoints = [
+  "Tailored Solutions",
+  "Industry Insights",
+  "Expert Guidance",
+  "Measurable Impact",
+];
 
 /* ---------- Stats / Track Record ---------- */
 export type Stat = { value: string; label: string };

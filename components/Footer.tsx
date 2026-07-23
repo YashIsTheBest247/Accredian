@@ -1,4 +1,3 @@
-import { Logo } from "@/components/Logo";
 import { EnquireButton } from "@/components/enquiry/EnquireButton";
 import {
   IconFacebook,
@@ -20,12 +19,20 @@ const companyLinks = ["About", "Blog", "Why Accredian"];
 
 export function Footer() {
   return (
-    <footer className="border-t border-line bg-surface">
+    <footer className="bg-[#171717] text-white">
       <div className="container-page py-14">
-        {/* Top: logo + enquire */}
-        <div className="flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
+        {/* Top: logo + socials + enquire */}
+        <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
           <div>
-            <Logo />
+            <span className="inline-flex flex-col leading-none">
+              <span className="text-3xl font-extrabold lowercase tracking-tight text-white">
+                accredian
+              </span>
+              <span className="mt-1 text-[0.68rem] font-medium tracking-[0.14em] text-white/60">
+                credentials that matter
+              </span>
+            </span>
+
             <div className="mt-6 flex gap-3">
               {socials.map(({ label, Icon, href }) => (
                 <a
@@ -34,30 +41,35 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`Accredian on ${label}`}
-                  className="grid h-10 w-10 place-items-center rounded-lg bg-surface-2 text-ink transition-colors hover:bg-brand-600 hover:text-white"
+                  className="grid h-10 w-10 place-items-center rounded-lg text-white transition-colors hover:text-brand-400"
                 >
-                  <Icon className="h-5 w-5" />
+                  <Icon className="h-7 w-7" />
                 </a>
               ))}
             </div>
+
+            <div className="mt-7 flex flex-col items-start gap-2 lg:hidden">
+              <EnquireButton size="lg">Enquire Now</EnquireButton>
+              <span className="text-sm text-white/80">Speak with our Advisor</span>
+            </div>
           </div>
 
-          <div className="flex flex-col items-start gap-2 sm:items-end">
+          <div className="hidden flex-col items-end gap-2 lg:flex">
             <EnquireButton size="lg">Enquire Now</EnquireButton>
-            <span className="text-sm text-ink-soft">Speak with our Advisor</span>
+            <span className="text-sm text-white/70">Speak with our Advisor</span>
           </div>
         </div>
 
-        <hr className="my-10 border-line" />
+        <hr className="my-10 border-white/15" />
 
         {/* Columns */}
         <div className="grid gap-10 sm:grid-cols-2">
           <div>
-            <h3 className="text-base font-bold text-ink">Accredian</h3>
+            <h3 className="text-lg font-bold text-white">Accredian</h3>
             <ul className="mt-4 space-y-3">
               {companyLinks.map((link) => (
                 <li key={link}>
-                  <a href="#" className="text-ink-soft transition-colors hover:text-brand-600">
+                  <a href="#" className="text-white/80 transition-colors hover:text-white">
                     {link}
                   </a>
                 </li>
@@ -66,23 +78,26 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="text-base font-bold text-ink">Contact Us</h3>
-            <p className="mt-4 text-ink-soft">
+            <h3 className="text-lg font-bold text-white">Contact Us</h3>
+            <p className="mt-4 text-white/80">
               Email us:{" "}
-              <a href="mailto:enterprise@accredian.com" className="text-brand-600 hover:underline">
+              <a
+                href="mailto:enterprise@accredian.com"
+                className="text-brand-400 hover:underline"
+              >
                 enterprise@accredian.com
               </a>
             </p>
-            <p className="mt-3 max-w-md text-ink-soft">
+            <p className="mt-3 max-w-md text-white/80">
               Office Address: 4th Floor, 250, Phase IV, Udyog Vihar, Sector 18, Gurugram,
               Haryana
             </p>
           </div>
         </div>
 
-        <hr className="my-10 border-line" />
+        <hr className="my-10 border-white/15" />
 
-        <p className="text-center text-sm text-ink-soft">
+        <p className="text-center text-sm text-white/80">
           © 2026 Accredian A Brand of FullStack Education Pvt Ltd. All Rights Reserved
         </p>
       </div>
