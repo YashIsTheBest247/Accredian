@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { Heading, Hl } from "@/components/ui/Heading";
 import { Reveal } from "@/components/ui/Reveal";
 import { edgeItems } from "@/lib/data";
@@ -12,30 +13,21 @@ const shades = [
   "from-brand-600 to-brand-800",
 ];
 
-/* Wheel geometry (viewBox 200×200, centre 100,100) */
+/* ---------- Wheel geometry (viewBox 200×200, centre 100,100) ---------- */
 const SEG = 360 / edgeItems.length;
 const R_OUT = 78;
-const R_IN = 44;
+const R_IN = 39; // ~0.5 ratio → matches the reference ring thickness
 const segColors = [
-  "#2BA8E0",
-  "#2C8FD9",
-  "#2477D0",
-  "#1F63C4",
-  "#1B54B4",
+  "#29ABE2",
+  "#1F8FE0",
+  "#1E7BDC",
+  "#1B63CE",
+  "#2059C4",
   "#17408F",
-  "#1D4FA8",
+  "#1C4FA8",
 ];
 
 const rad = (deg: number) => (deg * Math.PI) / 180;
-
-function WheelLabel({ item }: { item: (typeof edgeItems)[number] }) {
-  return (
-    <div>
-      <h3 className="text-[0.72rem] font-bold leading-tight text-ink">{item.title}</h3>
-      <p className="mt-0.5 text-[0.66rem] leading-snug text-ink-soft">{item.description}</p>
-    </div>
-  );
-}
 
 function segmentPath(i: number) {
   const a1 = rad(-90 + i * SEG);
@@ -51,6 +43,21 @@ function segmentPath(i: number) {
   return `M${x1} ${y1} A${R_OUT} ${R_OUT} 0 0 1 ${x2} ${y2} L${x3} ${y3} A${R_IN} ${R_IN} 0 0 0 ${x4} ${y4} Z`;
 }
 
+/**
+ * Label placement around the wheel, indexed to match `edgeItems`.
+ * All values stay inside 0–100% of the container, so nothing can overflow.
+ * Wheel is 46% wide (spans 27%–73%); corner labels sit above/below the circle.
+ */
+const labelPos: { style: CSSProperties; align: string }[] = [
+  { style: { left: "60%", top: "1%", width: "36%" }, align: "text-left" }, // Tailored Solutions
+  { style: { left: "74%", top: "42%", width: "25%", transform: "translateY(-50%)" }, align: "text-left" }, // Expert Guidance
+  { style: { left: "64%", top: "65%", width: "34%" }, align: "text-left" }, // Innovative Framework
+  { style: { left: "50%", top: "87%", width: "58%", transform: "translateX(-50%)" }, align: "text-center" }, // Advanced Technology
+  { style: { right: "64%", top: "65%", width: "34%" }, align: "text-right" }, // Diverse Offerings
+  { style: { right: "74%", top: "42%", width: "25%", transform: "translateY(-50%)" }, align: "text-right" }, // Proven Impact
+  { style: { right: "60%", top: "1%", width: "36%" }, align: "text-right" }, // Flexible Delivery
+];
+
 export function AccredianEdge() {
   return (
     <section id="edge" className="bg-surface py-14 sm:py-20">
@@ -61,22 +68,14 @@ export function AccredianEdge() {
         />
 
         {/* ---------- Mobile / tablet: "OUR USPS" wheel ---------- */}
-        <div className="mx-auto mt-8 w-full max-w-[30rem] lg:hidden">
-          <div className="grid grid-cols-[1fr_auto_1fr] items-stretch gap-x-2">
-            {/* Left labels: Flexible Delivery, Proven Impact, Diverse Offerings */}
-            <div className="flex flex-col justify-around gap-5 py-1 text-right">
-              {[6, 5, 4].map((idx) => (
-                <WheelLabel key={edgeItems[idx].title} item={edgeItems[idx]} />
-              ))}
-            </div>
-
-            {/* Wheel */}
-            <div className="relative aspect-square w-[42vw] max-w-[15rem] self-center">
+        <div className="relative mx-auto mt-8 aspect-[1/1.28] w-full max-w-[27rem] lg:hidden">
+          {/* Wheel — centred horizontally, sitting in the upper-middle */}
+          <div className="absolute left-1/2 top-[42%] aspect-square w-[46%] -translate-x-1/2 -translate-y-1/2">
             <svg viewBox="0 0 200 200" className="h-full w-full">
               {edgeItems.map((item, i) => (
                 <path key={item.title} d={segmentPath(i)} fill={segColors[i]} />
               ))}
-              <circle cx="100" cy="100" r={R_IN - 3} fill="#F3F8FF" />
+              <circle cx="100" cy="100" r={R_IN - 2} fill="#F1F7FF" />
             </svg>
 
             {/* Icons on each segment */}
@@ -92,31 +91,32 @@ export function AccredianEdge() {
                     top: `${50 + (rr * Math.sin(mid)) / 2}%`,
                   }}
                 >
-                  <item.icon className="h-[1.1rem] w-[1.1rem]" />
+                  <item.icon className="h-[1.15rem] w-[1.15rem]" />
                 </span>
               );
             })}
 
             {/* Centre label */}
-            <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-[1.05rem] font-extrabold leading-tight tracking-tight text-ink">
+            <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-[1.15rem] font-extrabold leading-[1.1] tracking-tight text-ink">
               OUR
               <br />
               USPS
             </span>
-            </div>
-
-            {/* Right labels: Tailored Solutions, Expert Guidance, Innovative Framework */}
-            <div className="flex flex-col justify-around gap-5 py-1 text-left">
-              {[0, 1, 2].map((idx) => (
-                <WheelLabel key={edgeItems[idx].title} item={edgeItems[idx]} />
-              ))}
-            </div>
           </div>
 
-          {/* Bottom label: Advanced Technology */}
-          <div className="mx-auto mt-4 max-w-[17rem] text-center">
-            <WheelLabel item={edgeItems[3]} />
-          </div>
+          {/* Labels around the wheel */}
+          {edgeItems.map((item, i) => (
+            <div
+              key={item.title}
+              style={labelPos[i].style}
+              className={`absolute ${labelPos[i].align}`}
+            >
+              <h3 className="text-[0.73rem] font-bold leading-tight text-ink">{item.title}</h3>
+              <p className="mt-0.5 text-[0.66rem] leading-snug text-ink-soft">
+                {item.description}
+              </p>
+            </div>
+          ))}
         </div>
 
         {/* ---------- Desktop: zigzag timeline ---------- */}
