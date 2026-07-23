@@ -28,6 +28,15 @@ const segColors = [
 
 const rad = (deg: number) => (deg * Math.PI) / 180;
 
+function WheelLabel({ item }: { item: (typeof edgeItems)[number] }) {
+  return (
+    <div>
+      <h3 className="text-[0.72rem] font-bold leading-tight text-ink">{item.title}</h3>
+      <p className="mt-0.5 text-[0.66rem] leading-snug text-ink-soft">{item.description}</p>
+    </div>
+  );
+}
+
 function segmentPath(i: number) {
   const a1 = rad(-90 + i * SEG);
   const a2 = rad(-90 + (i + 1) * SEG);
@@ -52,9 +61,17 @@ export function AccredianEdge() {
         />
 
         {/* ---------- Mobile / tablet: "OUR USPS" wheel ---------- */}
-        <div className="relative mx-auto mt-10 aspect-square w-full max-w-[27rem] lg:hidden">
-          {/* Wheel */}
-          <div className="absolute left-1/2 top-1/2 aspect-square w-[40%] -translate-x-1/2 -translate-y-1/2">
+        <div className="mx-auto mt-8 w-full max-w-[30rem] lg:hidden">
+          <div className="grid grid-cols-[1fr_auto_1fr] items-stretch gap-x-2">
+            {/* Left labels: Flexible Delivery, Proven Impact, Diverse Offerings */}
+            <div className="flex flex-col justify-around gap-5 py-1 text-right">
+              {[6, 5, 4].map((idx) => (
+                <WheelLabel key={edgeItems[idx].title} item={edgeItems[idx]} />
+              ))}
+            </div>
+
+            {/* Wheel */}
+            <div className="relative aspect-square w-[42vw] max-w-[15rem] self-center">
             <svg viewBox="0 0 200 200" className="h-full w-full">
               {edgeItems.map((item, i) => (
                 <path key={item.title} d={segmentPath(i)} fill={segColors[i]} />
@@ -86,46 +103,20 @@ export function AccredianEdge() {
               <br />
               USPS
             </span>
+            </div>
+
+            {/* Right labels: Tailored Solutions, Expert Guidance, Innovative Framework */}
+            <div className="flex flex-col justify-around gap-5 py-1 text-left">
+              {[0, 1, 2].map((idx) => (
+                <WheelLabel key={edgeItems[idx].title} item={edgeItems[idx]} />
+              ))}
+            </div>
           </div>
 
-          {/* Labels around the wheel */}
-          {edgeItems.map((item, i) => {
-            const mid = -90 + i * SEG + SEG / 2;
-            const c = Math.cos(rad(mid));
-            const s = Math.sin(rad(mid));
-            const RL = 40; // vertical spread, % of container from centre
-            const vertical = Math.abs(c) < 0.25;
-            // Anchor to the container edges so labels can never overflow the page.
-            const style: React.CSSProperties = {
-              top: `${50 + RL * s}%`,
-              transform: "translateY(-50%)",
-            };
-            if (vertical) {
-              style.left = "50%";
-              style.transform = "translate(-50%, -50%)";
-              style.width = "48%";
-            } else if (c > 0) {
-              style.right = "1%";
-              style.width = "29%";
-            } else {
-              style.left = "1%";
-              style.width = "29%";
-            }
-            return (
-              <div
-                key={item.title}
-                style={style}
-                className={`absolute ${
-                  vertical ? "text-center" : c > 0 ? "text-left" : "text-right"
-                }`}
-              >
-                <h3 className="text-[0.7rem] font-bold leading-tight text-ink">{item.title}</h3>
-                <p className="mt-0.5 text-[0.63rem] leading-snug text-ink-soft">
-                  {item.description}
-                </p>
-              </div>
-            );
-          })}
+          {/* Bottom label: Advanced Technology */}
+          <div className="mx-auto mt-4 max-w-[17rem] text-center">
+            <WheelLabel item={edgeItems[3]} />
+          </div>
         </div>
 
         {/* ---------- Desktop: zigzag timeline ---------- */}

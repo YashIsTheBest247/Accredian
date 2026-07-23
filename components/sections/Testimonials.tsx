@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Heading, Hl } from "@/components/ui/Heading";
 import { IconChevronRight } from "@/components/icons";
 import { testimonials } from "@/lib/data";
@@ -21,6 +21,19 @@ export function Testimonials() {
   const current = Math.min(page, pages - 1);
   const visible = testimonials.slice(current * perPage, current * perPage + perPage);
 
+  // Swipe support — moves in the direction of the swipe.
+  const startX = useRef<number | null>(null);
+  const onTouchStart = (e: React.TouchEvent) => {
+    startX.current = e.touches[0].clientX;
+  };
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (startX.current === null) return;
+    const dx = e.changedTouches[0].clientX - startX.current;
+    startX.current = null;
+    if (dx <= -40) setPage((p) => Math.min(p + 1, pages - 1));
+    else if (dx >= 40) setPage((p) => Math.max(p - 1, 0));
+  };
+
   return (
     <section id="testimonials" className="py-14 sm:py-20">
       <div className="container-page">
@@ -30,7 +43,11 @@ export function Testimonials() {
         />
 
         <div className="relative mt-10 sm:mt-14">
-          <div className="grid gap-6 md:grid-cols-2">
+          <div
+            className="grid gap-6 touch-pan-y md:grid-cols-2"
+            onTouchStart={onTouchStart}
+            onTouchEnd={onTouchEnd}
+          >
             {visible.map((t) => (
               <figure
                 key={t.company}
