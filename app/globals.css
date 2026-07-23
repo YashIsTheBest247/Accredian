@@ -53,6 +53,8 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
+    max-width: 100%;
   }
   section[id] {
     scroll-margin-top: 4.5rem;

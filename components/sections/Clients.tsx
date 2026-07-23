@@ -3,6 +3,9 @@ import { ClientLogo } from "@/components/ClientLogo";
 import { clients } from "@/lib/data";
 
 export function Clients() {
+  // Duplicated once so the -50% marquee loop is seamless.
+  const loop = [...clients, ...clients];
+
   return (
     <section id="clients" className="py-14 sm:py-20">
       <div className="container-page">
@@ -12,11 +15,15 @@ export function Clients() {
         />
       </div>
 
-      {/* Mobile: horizontal scroll strip. Desktop: centered wrap row. */}
-      <div className="mt-12 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:overflow-visible">
-        <div className="flex w-max items-center gap-12 px-5 sm:gap-16 lg:mx-auto lg:w-full lg:max-w-5xl lg:flex-wrap lg:justify-center lg:gap-x-20 lg:px-0">
-          {clients.map((client) => (
-            <div key={client.slug} className="flex shrink-0 items-center justify-center">
+      {/* Continuous right-to-left marquee */}
+      <div className="relative mt-12 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
+        <div className="flex w-max animate-marquee items-center gap-14 sm:gap-20">
+          {loop.map((client, i) => (
+            <div
+              key={`${client.slug}-${i}`}
+              className="flex shrink-0 items-center justify-center"
+              aria-hidden={i >= clients.length}
+            >
               <ClientLogo client={client} />
             </div>
           ))}

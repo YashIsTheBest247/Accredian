@@ -1,13 +1,30 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Heading, Hl } from "@/components/ui/Heading";
 import { Reveal } from "@/components/ui/Reveal";
 import { courseSegments } from "@/lib/data";
 
 export function CourseSegmentation() {
   const [page, setPage] = useState(0);
+  const startX = useRef<number | null>(null);
+
+  const last = courseSegments.length - 1;
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    startX.current = e.touches[0].clientX;
+  };
+
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (startX.current === null) return;
+    const dx = e.changedTouches[0].clientX - startX.current;
+    startX.current = null;
+    const threshold = 40;
+    // Swipe left → next card; swipe right → previous card.
+    if (dx <= -threshold) setPage((p) => Math.min(p + 1, last));
+    else if (dx >= threshold) setPage((p) => Math.max(p - 1, 0));
+  };
 
   return (
     <section className="bg-surface-2 py-14 sm:py-20">
@@ -19,7 +36,11 @@ export function CourseSegmentation() {
 
         {/* Mobile: one-card carousel */}
         <div className="mt-10 sm:hidden">
-          <div className="overflow-hidden">
+          <div
+            className="overflow-hidden touch-pan-y"
+            onTouchStart={onTouchStart}
+            onTouchEnd={onTouchEnd}
+          >
             <div
               className="flex transition-transform duration-500 ease-out"
               style={{ transform: `translateX(-${page * 100}%)` }}

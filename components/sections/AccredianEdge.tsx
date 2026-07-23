@@ -54,7 +54,7 @@ export function AccredianEdge() {
         {/* ---------- Mobile / tablet: "OUR USPS" wheel ---------- */}
         <div className="relative mx-auto mt-10 aspect-square w-full max-w-[27rem] lg:hidden">
           {/* Wheel */}
-          <div className="absolute left-1/2 top-1/2 aspect-square w-[54%] -translate-x-1/2 -translate-y-1/2">
+          <div className="absolute left-1/2 top-1/2 aspect-square w-[40%] -translate-x-1/2 -translate-y-1/2">
             <svg viewBox="0 0 200 200" className="h-full w-full">
               {edgeItems.map((item, i) => (
                 <path key={item.title} d={segmentPath(i)} fill={segColors[i]} />
@@ -93,24 +93,29 @@ export function AccredianEdge() {
             const mid = -90 + i * SEG + SEG / 2;
             const c = Math.cos(rad(mid));
             const s = Math.sin(rad(mid));
-            const RL = 38; // % of container from centre
+            const RL = 40; // vertical spread, % of container from centre
             const vertical = Math.abs(c) < 0.25;
-            const style: React.CSSProperties = { top: `${50 + RL * s}%` };
+            // Anchor to the container edges so labels can never overflow the page.
+            const style: React.CSSProperties = {
+              top: `${50 + RL * s}%`,
+              transform: "translateY(-50%)",
+            };
             if (vertical) {
               style.left = "50%";
               style.transform = "translate(-50%, -50%)";
+              style.width = "48%";
             } else if (c > 0) {
-              style.left = `${50 + RL * c}%`;
-              style.transform = "translateY(-50%)";
+              style.right = "1%";
+              style.width = "29%";
             } else {
-              style.right = `${50 - RL * c}%`;
-              style.transform = "translateY(-50%)";
+              style.left = "1%";
+              style.width = "29%";
             }
             return (
               <div
                 key={item.title}
                 style={style}
-                className={`absolute w-[33%] ${
+                className={`absolute ${
                   vertical ? "text-center" : c > 0 ? "text-left" : "text-right"
                 }`}
               >
